@@ -1,0 +1,62 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 3
+  tags:
+  - Ground
+  - JumpPad
+  - Checkpoints
+  - Enemy
+  - GameManager
+  - CheckpointText
+  - HeartsText
+  - CoinsText
+  - MovingPlatform
+  - DiamondsText
+  - RotatingPlatform
+  - ShrinkingPlatform
+  - DisappearingPlatform
+  - Props
+  - CmCamera
+  - StandingPlatform
+  - Grass
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - 
+  - Water
+  - UI
+  - 
+  - 
+  - NoPlayerCollision
+  - Player
+  - PostProcessing
+  - Panel3D
+  - Ground
+  - Props
+  - Enemy
+  - Platform
+  - Environment
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  m_SortingLayers:
+  - name: Default
+    uniqueID: 0
+    locked: 0
+  m_RenderingLayers:
+  - Default
