@@ -13,10 +13,11 @@ public class InGameSettings : MonoBehaviour
     private float sensitivity;
     private float soundVolume;
     private float musicVolume;
-    [SerializeField] CameraController cameraController;
+    CameraController cameraController;
 
     void Start()
     {
+        cameraController = Camera.main.GetComponent<CameraController>();
         //Set frame rate
         Application.targetFrameRate = 60;
 

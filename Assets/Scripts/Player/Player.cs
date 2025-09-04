@@ -1,6 +1,7 @@
 ﻿using System;
 using UnityEngine;
 using System.Collections;
+using UnityEngine.UIElements;
 
 public enum PlayerState
 {
@@ -73,6 +74,7 @@ public class Player : MonoBehaviour
     float afkTimer;
     float attackCooldownTimer;
     int idleAnimID;
+    float dodgeAngle = 0;
 
     public bool isInTutorial;
 
@@ -239,7 +241,7 @@ public class Player : MonoBehaviour
                 }
                 if (currentState == PlayerState.attacking)
                     EndAttacking();
-
+                transform.rotation = Quaternion.Euler(0f, dodgeAngle, 0f);
                 currentState = PlayerState.dodging;
                 dodgeTimer = dodgeCooldown;
                 health.Invulnerable = true;
@@ -265,6 +267,7 @@ public class Player : MonoBehaviour
                         speed = runSpeed;
                     float targetAngle = Mathf.Atan2(moveDirection.x, moveDirection.z) * Mathf.Rad2Deg + cam.eulerAngles.y;
                     float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
+                    dodgeAngle = angle;
                     transform.rotation = Quaternion.Euler(0f, angle, 0f);
                     Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
                     moveDir = moveDir.normalized;
@@ -299,8 +302,7 @@ public class Player : MonoBehaviour
                     Input.GetKey(PlayerInput.upKey) || Input.GetKey(PlayerInput.downKey))
                 {
                     float targetAngle = Mathf.Atan2(moveDirection.x, moveDirection.z) * Mathf.Rad2Deg + cam.eulerAngles.y;
-                    float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
-                    transform.rotation = Quaternion.Euler(0f, angle, 0f);
+                    dodgeAngle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
                 }
                 player.Move(transform.forward * comboMoveSpeeds[noOfClicks - 1] * Time.deltaTime);
             }
