@@ -126,8 +126,7 @@ public class SettingsButtons : MonoBehaviour
         keyButtons[3].SetKey(PlayerInput.rightKey, PlayerInput.rightKey.ToString());
         keyButtons[4].SetKey(PlayerInput.jumpKey, PlayerInput.jumpKey.ToString());
         keyButtons[5].SetKey(PlayerInput.useKey, PlayerInput.useKey.ToString());
-        keyButtons[6].SetKey(PlayerInput.equipWeaponKey, PlayerInput.equipWeaponKey.ToString());
-        keyButtons[7].SetKey(PlayerInput.dodgeKey, PlayerInput.dodgeKey.ToString());
+        keyButtons[6].SetKey(PlayerInput.dodgeKey, PlayerInput.dodgeKey.ToString());
         foreach(KeyBindButton btn in keyButtons)
         {
             ChangeButtonState(btn.gameObject, btn.WasChanged);
@@ -141,9 +140,8 @@ public class SettingsButtons : MonoBehaviour
         PlayerPrefs.SetString("RightKey", keyButtons[3].currentKeyText.text);
         PlayerPrefs.SetString("JumpKey", keyButtons[4].currentKeyText.text);
         PlayerPrefs.SetString("UseKey", keyButtons[5].currentKeyText.text);
-        PlayerPrefs.SetString("EquipKey", keyButtons[6].currentKeyText.text);
-        PlayerPrefs.SetString("DodgeKey", keyButtons[7].currentKeyText.text);
-        PlayerInput.SaveKeys(keyButtons[0].currentKey, keyButtons[1].currentKey, keyButtons[2].currentKey, keyButtons[3].currentKey, keyButtons[4].currentKey, keyButtons[5].currentKey,keyButtons[6].currentKey,keyButtons[7].currentKey);
+        PlayerPrefs.SetString("DodgeKey", keyButtons[6].currentKeyText.text);
+        PlayerInput.SaveKeys(keyButtons[0].currentKey, keyButtons[1].currentKey, keyButtons[2].currentKey, keyButtons[3].currentKey, keyButtons[4].currentKey, keyButtons[5].currentKey,keyButtons[6].currentKey);
         EventSystem.current.SetSelectedGameObject(null);
     }
     public void LoadInputs()
@@ -179,11 +177,6 @@ public class SettingsButtons : MonoBehaviour
             key = PlayerPrefs.GetString("UseKey");
             PlayerInput.useKey = (KeyCode)System.Enum.Parse(typeof(KeyCode), key);
         }
-        if (PlayerPrefs.HasKey("EquipKey"))
-        {
-            key = PlayerPrefs.GetString("EquipKey");
-            PlayerInput.equipWeaponKey = (KeyCode)System.Enum.Parse(typeof(KeyCode), key);
-        }
         if (PlayerPrefs.HasKey("DodgeKey"))
         {
             key = PlayerPrefs.GetString("DodgeKey");
@@ -203,9 +196,8 @@ public class SettingsButtons : MonoBehaviour
         PlayerPrefs.SetString("RightKey", "D");
         PlayerPrefs.SetString("JumpKey", "Space");
         PlayerPrefs.SetString("UseKey", "E");
-        PlayerPrefs.SetString("EquipKey", "H");
         PlayerPrefs.SetString("DodgeKey", "LeftShift");
-        PlayerInput.SaveKeys(keyButtons[0].currentKey, keyButtons[1].currentKey, keyButtons[2].currentKey, keyButtons[3].currentKey, keyButtons[4].currentKey, keyButtons[5].currentKey, keyButtons[6].currentKey, keyButtons[7].currentKey);
+        PlayerInput.SaveKeys(keyButtons[0].currentKey, keyButtons[1].currentKey, keyButtons[2].currentKey, keyButtons[3].currentKey, keyButtons[4].currentKey, keyButtons[5].currentKey, keyButtons[6].currentKey);
         LoadInputs();
         EventSystem.current.SetSelectedGameObject(null);
     }

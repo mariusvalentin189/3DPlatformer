@@ -21,6 +21,7 @@ TagManager:
   - CmCamera
   - StandingPlatform
   - Grass
+  - ChallengeText
   layers:
   - Default
   - TransparentFX

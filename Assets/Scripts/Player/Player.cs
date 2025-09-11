@@ -303,6 +303,7 @@ public class Player : MonoBehaviour
                 {
                     float targetAngle = Mathf.Atan2(moveDirection.x, moveDirection.z) * Mathf.Rad2Deg + cam.eulerAngles.y;
                     dodgeAngle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
+                    transform.rotation = Quaternion.Euler(0f, dodgeAngle, 0f);
                 }
                 player.Move(transform.forward * comboMoveSpeeds[noOfClicks - 1] * Time.deltaTime);
             }

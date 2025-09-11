@@ -11,8 +11,7 @@ public class PlayerInput
     public static KeyCode jumpKey=KeyCode.Space;
     public static KeyCode useKey = KeyCode.E;
     public static KeyCode dodgeKey = KeyCode.LeftShift;
-    public static KeyCode equipWeaponKey = KeyCode.H;
-    public static void SaveKeys(KeyCode up,KeyCode down,KeyCode left, KeyCode right, KeyCode jump,KeyCode use,KeyCode dodge,KeyCode equip)
+    public static void SaveKeys(KeyCode up,KeyCode down,KeyCode left, KeyCode right, KeyCode jump,KeyCode use,KeyCode dodge)
     {
         upKey = up;
         downKey = down;
@@ -21,6 +20,5 @@ public class PlayerInput
         jumpKey = jump;
         useKey = use;
         dodgeKey = dodge;
-        equipWeaponKey = equip;
     }
 }

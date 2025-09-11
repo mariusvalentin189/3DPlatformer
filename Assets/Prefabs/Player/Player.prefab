@@ -489,7 +489,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 1199357362444399646}
   distance: 5
-  height: 2
   rotationSpeed: 5
   zoomSpeed: 2
   minHeight: -5
@@ -556,17 +555,17 @@ PrefabInstance:
     - target: {fileID: 8446656680305781989, guid: 65dc6193c4d99ee41809f50e7dcca6d7,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.0097
+      value: 0.031
       objectReference: {fileID: 0}
     - target: {fileID: 8446656680305781989, guid: 65dc6193c4d99ee41809f50e7dcca6d7,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.2371
+      value: 0.2203
       objectReference: {fileID: 0}
     - target: {fileID: 8446656680305781989, guid: 65dc6193c4d99ee41809f50e7dcca6d7,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.1356
+      value: 0.1415
       objectReference: {fileID: 0}
     - target: {fileID: 8446656680305781989, guid: 65dc6193c4d99ee41809f50e7dcca6d7,
         type: 3}

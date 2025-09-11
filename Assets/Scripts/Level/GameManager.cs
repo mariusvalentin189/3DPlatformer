@@ -20,7 +20,6 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         instance = this;
-        //transform.SetParent(null);
     }
     public void StawnCoins(int ammount, Vector3 pos)
     {

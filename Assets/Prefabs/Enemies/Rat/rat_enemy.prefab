@@ -79,7 +79,7 @@ MonoBehaviour:
   attackCooldown: 0.5
   standStillTime: 0
   knockbackTime: 0
-  coinsDropAmmount: 0
+  coinsDropAmmount: 2
   coinsDropLocationOffsetY: 0.5
   walkRadius: 2
   timeBetweenDestinations: 2

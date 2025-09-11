@@ -2,20 +2,19 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
-    [SerializeField] Transform player;  // The player to follow
-    [SerializeField] float distance = 5.0f;  // Default distance behind the player
-    [SerializeField] float height = 2.0f;  // Default height above the player
-    [SerializeField] float rotationSpeed = 5.0f;  // Speed at which the camera rotates
-    [SerializeField] float zoomSpeed = 2.0f;  // Speed at which the camera zooms in and out
-    [SerializeField] float minHeight = 1.0f;  // Minimum height (camera up/down bound)
-    [SerializeField] float maxHeight = 4.0f;  // Maximum height (camera up/down bound)
-    [SerializeField] float minZoom = 2.0f;  // Minimum zoom (distance to the player)
-    [SerializeField] float maxZoom = 10.0f;  // Maximum zoom (distance to the player)
+    [SerializeField] Transform player;
+    [SerializeField] float distance = 5.0f;
+    [SerializeField] float rotationSpeed = 5.0f;
+    [SerializeField] float zoomSpeed = 2.0f;
+    [SerializeField] float minHeight = 1.0f;
+    [SerializeField] float maxHeight = 4.0f;
+    [SerializeField] float minZoom = 2.0f;
+    [SerializeField] float maxZoom = 10.0f;
 
     [SerializeField] LayerMask collisionLayers;
 
-    float currentAngleX = 0f;  // Vertical angle
-    float currentAngleY = 0f;  // Horizontal angle
+    float currentAngleX = 0f;
+    float currentAngleY = 0f;
     void LateUpdate()
     {
         if (player == null || PauseMenu.instance.isPaused)

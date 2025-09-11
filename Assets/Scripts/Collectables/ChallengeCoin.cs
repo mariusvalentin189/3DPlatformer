@@ -5,19 +5,20 @@ using TMPro;
 
 public class ChallengeCoin : MonoBehaviour
 {
-    public float timeToComplete;
-    public float rotateSpeed;
-    public Transform[] coinsSpawnPoints;
-    public GameObject coinPrefab;
-    public GameObject diamondPrefab;
-    public Transform diamondSpawnPoint;
-    public TMP_Text timerText;
-    private GameObject[] coins;
-    private bool coinsSpawned;
-    private float timer;
-    private AudioManager sound;
+    [SerializeField] float timeToComplete;
+    [SerializeField] float rotateSpeed;
+    [SerializeField] Transform[] coinsSpawnPoints;
+    [SerializeField] GameObject coinPrefab;
+    [SerializeField] GameObject diamondPrefab;
+    [SerializeField] Transform diamondSpawnPoint;
+    TMP_Text timerText;
+    GameObject[] coins;
+    bool coinsSpawned;
+    float timer;
+    AudioManager sound;
     void Start()
     {
+        timerText = GameObject.FindGameObjectWithTag("ChallengeText").GetComponent<TMP_Text>();
         coins = new GameObject[coinsSpawnPoints.Length];
         timer = timeToComplete;
         sound = AudioManager.instance;

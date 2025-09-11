@@ -5,25 +5,30 @@ using UnityEngine.AI;
 using UnityEngine.Animations;
 public class Enemy : MonoBehaviour
 {
+    [Header("AI")]
     [SerializeField] NavMeshAgent enemy;
-    [SerializeField] int maxHearts;
     [SerializeField] float detectRange;
     [SerializeField] float attackRange;
     [SerializeField] float chanseMaxRange;
     [SerializeField] float attackCooldown;
     [SerializeField] float standStillTime;
     [SerializeField] float knockbackTime;
-    [SerializeField] int coinsDropAmmount;
-    [SerializeField] float coinsDropLocationOffsetY;
     [SerializeField] float walkRadius;
     [SerializeField] float timeBetweenDestinations;
     [SerializeField] float walkSpeed, chaseSpeed;
     [SerializeField] Animator anim;
+
+    [Header("Damage")]
+    [SerializeField] int maxHearts;
+    [SerializeField] int coinsDropAmmount;
+    [SerializeField] float coinsDropLocationOffsetY;
     [SerializeField] BoxCollider takeDamgeCollider;
     [SerializeField] BoxCollider damagePlayerCollider;
     [SerializeField] SkinnedMeshRenderer model;
     [SerializeField] Material[] takeDamageMaterials;
+    [SerializeField] float knockbackMultiplier;
     Material[] defaultModelMaterials;
+
     Transform target;
     Vector3 initialPosition;
     float destTime;
@@ -174,7 +179,7 @@ public class Enemy : MonoBehaviour
         while (timeElapsed < 0.2f)
         {
             // Move the agent towards the knockback direction
-            enemy.Move(knockbackDirection * 5f * Time.deltaTime);
+            enemy.Move(knockbackDirection * knockbackMultiplier * Time.deltaTime);
 
             // Update elapsed time
             timeElapsed += Time.deltaTime;
