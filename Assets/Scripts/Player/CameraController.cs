@@ -17,7 +17,7 @@ public class CameraController : MonoBehaviour
     float currentAngleY = 0f;
     void LateUpdate()
     {
-        if (player == null || PauseMenu.instance.isPaused)
+        if (player == null || PauseMenu.instance.IsPaused)
             return;
 
         // Handle horizontal rotation

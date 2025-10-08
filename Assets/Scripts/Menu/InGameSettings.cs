@@ -6,14 +6,15 @@ using Cinemachine;
 public class InGameSettings : MonoBehaviour
 {
     public static InGameSettings instance;
+    float sensitivity;
+    float soundVolume;
+    float musicVolume;
+    CameraController cameraController;
+
     private void Awake()
     {
         instance = this;
     }
-    private float sensitivity;
-    private float soundVolume;
-    private float musicVolume;
-    CameraController cameraController;
 
     void Start()
     {

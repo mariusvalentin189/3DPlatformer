@@ -10,7 +10,7 @@ public class TutorialLevel : MonoBehaviour
     void Awake()
     {
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
-        player.isInTutorial = true;
+        player.IsInTutorial = true;
     }
     void Update()
     {

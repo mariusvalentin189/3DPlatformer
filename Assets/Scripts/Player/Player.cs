@@ -15,8 +15,10 @@ public enum PlayerState
 public class Player : MonoBehaviour
 {
     public static Player instance;
+
     [Header("Player State")]
     public PlayerState currentState = PlayerState.idle;
+
     [Header("Movement")]
     [SerializeField] float runSpeed;
     [SerializeField] float walkSpeed;
@@ -42,8 +44,8 @@ public class Player : MonoBehaviour
     [SerializeField] GameObject dustParticle;
     [SerializeField] GameObject particlePosLeft;
     [SerializeField] GameObject particlePosRight;
-    public bool isGrounded;
-    public Vector3 initialPos;
+    bool isGrounded;
+    Vector3 initialPos;
 
     [Header("Attacking")]
     [SerializeField] BoxCollider weaponCollider;
@@ -54,29 +56,17 @@ public class Player : MonoBehaviour
     [SerializeField] float attackCooldown = 1f;
     [SerializeField] float[] comboMoveSpeeds;
     [SerializeField] HealthManager health;
-    public int noOfClicks = 0;
 
-    private Vector3 moveDirection;
-    private float speed = 0f, cpyjump;
-    private int jumpCounter;
-    private float turnSmoothVelocity;  
-    private float cpyAirTime;
-    private RaycastHit hit;
-    private int dirX, dirZ;
-    private bool jumped;
-    private float groundAngle;
-    private Vector3 projected;
-    private float dodgeTimer;
-    private AudioManager sounds;
-    private bool doubleJumpUnlocked, dodgeUnlocked;
-    private int jumpOnEnemyX, jumpOnEnemyZ;
-    bool canJumpInAir;
-    float afkTimer;
-    float attackCooldownTimer;
-    int idleAnimID;
-    float dodgeAngle = 0;
+    public bool IsInTutorial { get; set; }
+    public Vector3 InitialPosition { get { return initialPos; } }
 
-    public bool isInTutorial;
+    Vector3 moveDirection;
+    float speed = 0f, cpyjump, turnSmoothVelocity, cpyAirTime, groundAngle, dodgeTimer, afkTimer, attackCooldownTimer, dodgeAngle = 0;
+    int jumpCounter, noOfClicks = 0, idleAnimID, jumpOnEnemyX, jumpOnEnemyZ, dirX, dirZ;
+    bool jumped, doubleJumpUnlocked, dodgeUnlocked, canJumpInAir;
+    Vector3 projected;
+    AudioManager sounds;
+    RaycastHit hit;
 
     private void Awake()
     {
@@ -91,13 +81,13 @@ public class Player : MonoBehaviour
         player = GetComponent <CharacterController>();
         initialPos = transform.position;
         cpyAirTime = airTime;
-        if (!isInTutorial)
+        if (!IsInTutorial)
             LoadAdditionalStats();
         else UnlockStats();
     }
     void Update()
     {
-        if (PauseMenu.instance.isPaused)
+        if (PauseMenu.instance.IsPaused)
             return;
         CheckGround();
         CalculateGroundAngle();

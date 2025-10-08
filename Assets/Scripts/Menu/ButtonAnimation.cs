@@ -9,9 +9,9 @@ public class ButtonAnimation : MonoBehaviour,IPointerEnterHandler,IPointerExitHa
     [SerializeField] float speed;
     [SerializeField] float selectedSizeIncrease;
     [SerializeField] Button button;
-    private Vector3 newSize;
-    private Vector3 currentSize;
-    private AudioManager sound;
+    Vector3 newSize;
+    Vector3 currentSize;
+    AudioManager sound;
     // Start is called before the first frame update
     void Start()
     {

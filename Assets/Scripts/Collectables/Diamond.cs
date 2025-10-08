@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Diamond : Coins
+public class Diamond : Collectible
 {
     public override void OnTriggerEnter(Collider other)
     {

@@ -5,9 +5,9 @@ using TMPro;
 
 public class LevelsManager : MonoBehaviour
 {
-    public Level[] levels;
-    public TMP_Text coinsText, livesText, diamondsText;
-    private int coinsCount, livesCount, diamondsCount;
+    [SerializeField] Level[] levels;
+    [SerializeField] TMP_Text coinsText, livesText, diamondsText;
+    int coinsCount, livesCount, diamondsCount;
     private void Awake()
     {
         LoadLevels();

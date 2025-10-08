@@ -7,18 +7,23 @@ using UnityEngine.UI;
 public class PauseMenu : MonoBehaviour
 {
     public static PauseMenu instance;
+
+    [SerializeField] GameObject pauseMenuPannel,settingsPanel,controlsPanel,loadingBarPanel;
+    [SerializeField] LoadingBar loadingBar;
+    [SerializeField] Image loadingScreenImage;
+    [SerializeField] Sprite lobbyLevelSprite;
+    [SerializeField] Sprite mainMenuSprite;
+    [SerializeField] SettingsButtons settingsButtons;
+    bool isPaused, isInSettings, isInControls;
+
+    public bool IsPaused {  get { return isPaused; } }
+
     private void Awake()
     {
         instance = this;
         transform.SetParent(null);
     }
-    public GameObject pauseMenuPannel,settingsPanel,controlsPanel,loadingBarPanel;
-    public LoadingBar loadingBar;
-    public bool isPaused,isInSettings,isInControls;
-    [SerializeField] private Image loadingScreenImage;
-    [SerializeField] private Sprite lobbyLevelSprite;
-    [SerializeField] private Sprite mainMenuSprite;
-    [SerializeField] SettingsButtons settingsButtons;
+
     void Start()
     {
         pauseMenuPannel.SetActive(false);
@@ -93,7 +98,7 @@ public class PauseMenu : MonoBehaviour
         Time.timeScale = 1;
         loadingBarPanel.SetActive(true);
         loadingScreenImage.sprite = mainMenuSprite;
-        loadingBar.levelName = "MAIN MENU";
+        loadingBar.SetLevelName("MAIN MENU");
         loadingBar.operation = SceneManager.LoadSceneAsync("MainMenu");
     }
     public void BackToPauseMenu()

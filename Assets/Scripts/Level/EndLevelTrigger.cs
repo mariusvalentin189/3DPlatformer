@@ -5,11 +5,11 @@ using UnityEngine.SceneManagement;
 
 public class EndLevelTrigger : MonoBehaviour
 {
-    public GameObject endLevelPanel;
-    public HealthManager healthManager;
-    public Level level;
-    public Level[] levels;
-    [SerializeField] private float rotationSpeed;
+    [SerializeField] GameObject endLevelPanel;
+    [SerializeField] HealthManager healthManager;
+    [SerializeField] Level level;
+    [SerializeField] Level[] levels;
+    [SerializeField] float rotationSpeed;
     private void Start()
     {
         healthManager = HealthManager.instance;

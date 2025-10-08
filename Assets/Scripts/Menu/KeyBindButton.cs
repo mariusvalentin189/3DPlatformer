@@ -5,9 +5,11 @@ using TMPro;
 
 public class KeyBindButton : MonoBehaviour
 {
-    public KeyCode currentKey;
-    public TMP_Text currentKeyText;
+    [SerializeField] KeyCode currentKey;
+    [SerializeField] TMP_Text currentKeyText;
     public bool WasChanged { get; set; }
+    public KeyCode CurrentKey { get { return currentKey; } }
+    public TMP_Text CurrentKeyText { get { return currentKeyText; } }   
     public void SetKey(KeyCode key,string text)
     {
         if (currentKeyText.text != text)
@@ -19,5 +21,13 @@ public class KeyBindButton : MonoBehaviour
     public void SetTextColor(Color c)
     {
         currentKeyText.color = c;
-    }    
+    }
+    public void SetCurrentKey(KeyCode key)
+    {
+        currentKey = key;
+    }
+    public void SetCurrentKeyText(string key)
+    {
+        currentKeyText.text += key;
+    }
 }

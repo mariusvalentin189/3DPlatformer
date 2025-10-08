@@ -5,8 +5,8 @@ using UnityEngine;
 public class RespawnTrigger : MonoBehaviour
 {
     public static RespawnTrigger instance;
-    public GameObject[] checkpoints;
-    private Player playerController;
+    [SerializeField] GameObject[] checkpoints;
+    [SerializeField] Player playerController;
     private void Awake()
     {
         instance = this;
@@ -48,7 +48,7 @@ public class RespawnTrigger : MonoBehaviour
             if(foundCheckpoint==false)
             {
                 player.GetComponent<CharacterController>().enabled = false;
-                player.position = playerController.initialPos;
+                player.position = playerController.InitialPosition;
                 player.GetComponent<CharacterController>().enabled = true;
                 player.GetComponent<HealthManager>().RemoveLife();
             }
@@ -85,7 +85,7 @@ public class RespawnTrigger : MonoBehaviour
         if (foundCheckpoint == false)
         {
             playerController.GetComponent<CharacterController>().enabled = false;
-            playerController.transform.position = playerController.initialPos;
+            playerController.transform.position = playerController.InitialPosition;
             playerController.GetComponent<CharacterController>().enabled = true;
         }
     }

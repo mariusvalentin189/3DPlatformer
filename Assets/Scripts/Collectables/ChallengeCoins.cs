@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ChallengeCoins : Coins
+public class ChallengeCoins : Collectible
 {
     public override void OnTriggerEnter(Collider other)
     {

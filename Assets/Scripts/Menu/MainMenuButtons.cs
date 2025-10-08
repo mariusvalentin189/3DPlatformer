@@ -6,16 +6,16 @@ using UnityEngine.UI;
 
 public class MainMenuButtons : MonoBehaviour
 {
-    [SerializeField] private GameObject loadingBarCanvas,mainMenuCanvas;
-    [SerializeField] private Image loadingScreenImage;
-    [SerializeField] private Sprite lobbyLevelSprite;
-    [SerializeField] private Sprite tutorialLevelSprite;
-    [SerializeField] private LoadingBar loadingBar;
-    [SerializeField] private Button continueLevelButton;
-    [SerializeField] private Level[] levels;
-    [SerializeField] private GameObject newGameConfirmPanel;
-    [SerializeField] private GameObject tutorialConfirmPanel;
-    [SerializeField] private Transform characterSpawnPoint;
+    [SerializeField] GameObject loadingBarCanvas,mainMenuCanvas;
+    [SerializeField] Image loadingScreenImage;
+    [SerializeField] Sprite lobbyLevelSprite;
+    [SerializeField] Sprite tutorialLevelSprite;
+    [SerializeField] LoadingBar loadingBar;
+    [SerializeField] Button continueLevelButton;
+    [SerializeField] Level[] levels;
+    [SerializeField] GameObject newGameConfirmPanel;
+    [SerializeField] GameObject tutorialConfirmPanel;
+    [SerializeField] Transform characterSpawnPoint;
     private void Awake()
     {
         continueLevelButton.interactable = false;
@@ -49,7 +49,7 @@ public class MainMenuButtons : MonoBehaviour
         loadingBarCanvas.SetActive(true);
         loadingScreenImage.sprite = lobbyLevelSprite;
         loadingBar.operation = SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex + 1);
-        loadingBar.levelName = "LOBBY";
+        loadingBar.SetLevelName("LOBBY");
         mainMenuCanvas.SetActive(false);
     }
     public void ContinueGame()
@@ -57,7 +57,7 @@ public class MainMenuButtons : MonoBehaviour
         loadingBarCanvas.SetActive(true);
         loadingScreenImage.sprite = lobbyLevelSprite;
         loadingBar.operation = SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex + 1);
-        loadingBar.levelName = "LOBBY";
+        loadingBar.SetLevelName("LOBBY");
         mainMenuCanvas.SetActive(false);
     }
     public void Tutorial()
@@ -70,7 +70,7 @@ public class MainMenuButtons : MonoBehaviour
         loadingBarCanvas.SetActive(true);
         loadingScreenImage.sprite = tutorialLevelSprite;
         loadingBar.operation = SceneManager.LoadSceneAsync("TutorialLevel");
-        loadingBar.levelName = "TUTORIAL";
+        loadingBar.SetLevelName("TUTORIAL");
         mainMenuCanvas.SetActive(false);
     }
 }

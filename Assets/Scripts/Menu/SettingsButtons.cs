@@ -102,13 +102,13 @@ public class SettingsButtons : MonoBehaviour
             {
                 Debug.Log(k.keyCode);
                 for (int i = 0; i < keyButtons.Length && !alreadyAKey; i++)
-                    if (keyButtons[i].currentKey == k.keyCode)
+                    if (keyButtons[i].CurrentKey == k.keyCode)
                         alreadyAKey = true;
                 if (!alreadyAKey)
                 {
-                    currentPressed.GetComponent<KeyBindButton>().currentKey = k.keyCode;
+                    currentPressed.GetComponent<KeyBindButton>().SetCurrentKey(k.keyCode);
                     ChangeButtonState(currentPressed, true);
-                    currentPressed.GetComponent<KeyBindButton>().currentKeyText.text = k.keyCode.ToString();
+                    currentPressed.GetComponent<KeyBindButton>().SetCurrentKeyText(k.keyCode.ToString());
                 }
                 currentPressed = null;
             }
@@ -134,14 +134,14 @@ public class SettingsButtons : MonoBehaviour
     }
     public void SaveInputs()
     {
-        PlayerPrefs.SetString("UpKey", keyButtons[0].currentKeyText.text);
-        PlayerPrefs.SetString("DownKey", keyButtons[1].currentKeyText.text);
-        PlayerPrefs.SetString("LeftKey", keyButtons[2].currentKeyText.text);
-        PlayerPrefs.SetString("RightKey", keyButtons[3].currentKeyText.text);
-        PlayerPrefs.SetString("JumpKey", keyButtons[4].currentKeyText.text);
-        PlayerPrefs.SetString("UseKey", keyButtons[5].currentKeyText.text);
-        PlayerPrefs.SetString("DodgeKey", keyButtons[6].currentKeyText.text);
-        PlayerInput.SaveKeys(keyButtons[0].currentKey, keyButtons[1].currentKey, keyButtons[2].currentKey, keyButtons[3].currentKey, keyButtons[4].currentKey, keyButtons[5].currentKey,keyButtons[6].currentKey);
+        PlayerPrefs.SetString("UpKey", keyButtons[0].CurrentKeyText.text);
+        PlayerPrefs.SetString("DownKey", keyButtons[1].CurrentKeyText.text);
+        PlayerPrefs.SetString("LeftKey", keyButtons[2].CurrentKeyText.text);
+        PlayerPrefs.SetString("RightKey", keyButtons[3].CurrentKeyText.text);
+        PlayerPrefs.SetString("JumpKey", keyButtons[4].CurrentKeyText.text);
+        PlayerPrefs.SetString("UseKey", keyButtons[5].CurrentKeyText.text);
+        PlayerPrefs.SetString("DodgeKey", keyButtons[6].CurrentKeyText.text);
+        PlayerInput.SaveKeys(keyButtons[0].CurrentKey, keyButtons[1].CurrentKey, keyButtons[2].CurrentKey, keyButtons[3].CurrentKey, keyButtons[4].CurrentKey, keyButtons[5].CurrentKey, keyButtons[6].CurrentKey);
         EventSystem.current.SetSelectedGameObject(null);
     }
     public void LoadInputs()
@@ -197,7 +197,7 @@ public class SettingsButtons : MonoBehaviour
         PlayerPrefs.SetString("JumpKey", "Space");
         PlayerPrefs.SetString("UseKey", "E");
         PlayerPrefs.SetString("DodgeKey", "LeftShift");
-        PlayerInput.SaveKeys(keyButtons[0].currentKey, keyButtons[1].currentKey, keyButtons[2].currentKey, keyButtons[3].currentKey, keyButtons[4].currentKey, keyButtons[5].currentKey, keyButtons[6].currentKey);
+        PlayerInput.SaveKeys(keyButtons[0].CurrentKey, keyButtons[1].CurrentKey, keyButtons[2].CurrentKey, keyButtons[3].CurrentKey, keyButtons[4].CurrentKey, keyButtons[5].CurrentKey, keyButtons[6].CurrentKey);
         LoadInputs();
         EventSystem.current.SetSelectedGameObject(null);
     }

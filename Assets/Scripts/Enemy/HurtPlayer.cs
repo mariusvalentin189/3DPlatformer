@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class HurtPlayer : MonoBehaviour
 {
-    private Vector3 direction;
-    [SerializeField] private float knockbackForce;
-    [SerializeField] private Enemy enemy;
+    Vector3 direction;
+    [SerializeField] float knockbackForce;
+    [SerializeField] Enemy enemy;
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Player"))

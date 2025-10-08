@@ -6,9 +6,9 @@ using TMPro;
 public class LoadingBar : MonoBehaviour
 {
     public AsyncOperation operation;
-    [HideInInspector] public string levelName;
-    [SerializeField] private Slider loadingBar;
-    [SerializeField] private TMP_Text levelNameText;
+    [SerializeField] string levelName;
+    [SerializeField] Slider loadingBar;
+    [SerializeField] TMP_Text levelNameText;
     private void Start()
     {
         levelNameText.text = levelName;
@@ -17,5 +17,9 @@ public class LoadingBar : MonoBehaviour
     {
         if (loadingBar != null && operation != null)
             loadingBar.value = operation.progress;
+    }
+    public void SetLevelName(string name)
+    {
+        levelName = name;
     }
 }

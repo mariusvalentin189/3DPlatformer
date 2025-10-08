@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HeartScript : Coins
+public class Heart : Collectible
 {
     public override void OnTriggerEnter(Collider other)
     {

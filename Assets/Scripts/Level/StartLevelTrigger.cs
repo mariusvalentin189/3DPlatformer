@@ -6,14 +6,14 @@ using UnityEngine.UI;
 
 public class StartLevelTrigger : MonoBehaviour
 {
-    [SerializeField] private Level level;
-    [SerializeField] private string levelName;
-    [SerializeField] private BoxCollider coll;
-    [SerializeField] private GameObject wall;
-    [SerializeField] private GameObject loadingBarPanel;
-    [SerializeField] private LoadingBar loadingBar;
-    [SerializeField] private Image loadingScreenImage;
-    [SerializeField] private Sprite levelSprite;
+    [SerializeField] Level level;
+    [SerializeField] string levelName;
+    [SerializeField] BoxCollider coll;
+    [SerializeField] GameObject wall;
+    [SerializeField] GameObject loadingBarPanel;
+    [SerializeField] LoadingBar loadingBar;
+    [SerializeField] Image loadingScreenImage;
+    [SerializeField] Sprite levelSprite;
     void Start()
     {
         if (level.unlocked == false)
@@ -35,7 +35,7 @@ public class StartLevelTrigger : MonoBehaviour
             loadingBarPanel.SetActive(true);
             loadingScreenImage.sprite = levelSprite;
             loadingBar.operation=SceneManager.LoadSceneAsync(level.levelSceneName);
-            loadingBar.levelName = levelName;
+            loadingBar.SetLevelName(levelName);
         }
     }
 }

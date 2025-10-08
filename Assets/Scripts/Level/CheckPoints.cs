@@ -6,12 +6,12 @@ using TMPro;
 
 public class CheckPoints : MonoBehaviour
 {
-    public Material inactiveMaterial, activeMaterial;
-    public RespawnTrigger respawnTrigger; 
-    [SerializeField] private TMP_Text checkpointText;
-    [SerializeField] private float timeToDissapear;
-    private bool active = false;
-    private AudioManager sound;
+    [SerializeField] Material inactiveMaterial, activeMaterial;
+    [SerializeField] RespawnTrigger respawnTrigger; 
+    [SerializeField] TMP_Text checkpointText;
+    [SerializeField] float timeToDissapear;
+    bool active = false;
+    AudioManager sound;
     private void Awake()
     {
         checkpointText = GameObject.FindGameObjectWithTag("CheckpointText").GetComponent<TMP_Text>();
