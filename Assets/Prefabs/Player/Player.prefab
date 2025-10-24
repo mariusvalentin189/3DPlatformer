@@ -90,11 +90,11 @@ MonoBehaviour:
   dodgeSpeed: 4
   dodgeTime: 0.2
   dodgeCooldown: 0.5
-  speedMultiplyer: 10
+  speedMultiplyer: 50
   player: {fileID: 1478739843134199079}
   cam: {fileID: 5687269748840773399}
   anim: {fileID: 6721855679553391670}
-  turnSmoothTime: 0.1
+  turnSmoothTime: 0.06
   afkTime: 2
   jumpForce: 6
   gravityMultiplyer: 2
@@ -110,8 +110,6 @@ MonoBehaviour:
     type: 3}
   particlePosLeft: {fileID: 9041593186240520510}
   particlePosRight: {fileID: 7000249875936666041}
-  isGrounded: 0
-  initialPos: {x: 0, y: 0, z: 0}
   weaponCollider: {fileID: 8798971123408097487}
   minAnimTimeNextHit: 0.4
   maxAnimTimeNextHit: 0.7
@@ -121,8 +119,6 @@ MonoBehaviour:
   - 1
   - 1.5
   health: {fileID: 1540944716}
-  noOfClicks: 0
-  isInTutorial: 0
 --- !u!114 &1540944716
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -336,6 +332,8 @@ MeshRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -357,6 +355,7 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
