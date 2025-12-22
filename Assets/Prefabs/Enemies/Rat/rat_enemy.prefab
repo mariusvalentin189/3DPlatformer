@@ -51,7 +51,7 @@ NavMeshAgent:
   m_Acceleration: 100
   avoidancePriority: 50
   m_AngularSpeed: 999
-  m_StoppingDistance: 0.2
+  m_StoppingDistance: 0.5
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 0
   m_AutoRepath: 1
@@ -72,26 +72,29 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemy: {fileID: 2998042222845738724}
-  maxHearts: 4
   detectRange: 3
   attackRange: 0.8
   chanseMaxRange: 5
   attackCooldown: 0.5
-  standStillTime: 0
-  knockbackTime: 0
-  coinsDropAmmount: 2
-  coinsDropLocationOffsetY: 0.5
+  standStillTime: 1
+  knockbackTime: 0.2
   walkRadius: 2
   timeBetweenDestinations: 2
   walkSpeed: 1
   chaseSpeed: 2
   anim: {fileID: 6751106121655728456}
+  rotationSpeed: 2
+  chaseRotationSpeed: 5
+  maxHearts: 5
+  coinsDropAmmount: 2
+  coinsDropLocationOffsetY: 0.5
   takeDamgeCollider: {fileID: 2998042222845738723}
   damagePlayerCollider: {fileID: 6751106122679840219}
   model: {fileID: 6627988525032799598}
   takeDamageMaterials:
   - {fileID: 2100000, guid: 94414c821c91706459557ff6ba7d3c12, type: 2}
   - {fileID: 2100000, guid: 94414c821c91706459557ff6ba7d3c12, type: 2}
+  knockbackMultiplier: 1
 --- !u!114 &2998042222845738722
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -135,10 +138,10 @@ Rigidbody:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2998042222845738720}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
@@ -216,6 +219,8 @@ MeshRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -237,6 +242,7 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
@@ -361,7 +367,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: c5ee73f6512d97f4c8051ee2e7e3727c,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.061
+      value: 0.002
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: c5ee73f6512d97f4c8051ee2e7e3727c,
         type: 3}

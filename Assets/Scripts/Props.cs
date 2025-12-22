@@ -13,7 +13,7 @@ public class Props : MonoBehaviour
     }
     public void DestroyObject()
     {
-        gameManager.StawnCoins(coinsDropAmmount, transform.position);
+        gameManager.SpawnCoinsAmmount(coinsDropAmmount, transform.position);
         GameObject destroyedProp = Instantiate(destroyedObject, transform.position, Quaternion.identity);
         Destroy(destroyedProp, 2f);
         Destroy(gameObject);

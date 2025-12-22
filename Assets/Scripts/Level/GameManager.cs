@@ -21,7 +21,7 @@ public class GameManager : MonoBehaviour
     {
         instance = this;
     }
-    public void StawnCoins(int ammount, Vector3 pos)
+    public void SpawnCoinsAmmount(int ammount, Vector3 pos)
     {
         StartCoroutine(SpawnCoins(ammount, pos));
     }

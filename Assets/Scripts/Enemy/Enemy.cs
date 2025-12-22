@@ -6,7 +6,7 @@ using UnityEngine.Animations;
 public class Enemy : MonoBehaviour
 {
     [Header("AI")]
-    [SerializeField] NavMeshAgent enemy;
+    [SerializeField] protected NavMeshAgent enemy;
     [SerializeField] float detectRange;
     [SerializeField] float attackRange;
     [SerializeField] float chanseMaxRange;
@@ -17,6 +17,8 @@ public class Enemy : MonoBehaviour
     [SerializeField] float timeBetweenDestinations;
     [SerializeField] float walkSpeed, chaseSpeed;
     [SerializeField] Animator anim;
+    [SerializeField] float rotationSpeed;
+    [SerializeField] float chaseRotationSpeed;
 
     [Header("Damage")]
     [SerializeField] int maxHearts;
@@ -40,7 +42,9 @@ public class Enemy : MonoBehaviour
     bool invulnerable = false;
     bool returningToStartPosition = false;
     int hearts;
-    void Start()
+    protected float currentSpeed;
+    protected float currentRotationSpeed = 0;
+    protected void Start()
     {
         currentAttackCooldown = 0;
         defaultModelMaterials = model.materials;
@@ -49,104 +53,128 @@ public class Enemy : MonoBehaviour
         initialPosition = transform.position;
         destTime = timeBetweenDestinations;
         hearts = maxHearts;
+        enemy.updateRotation = false;
     }
 
     // Update is called once per frame
-    void Update()
+    protected void Update()
     {
         if (!isDead)
         {
-            float distance = Vector3.Distance(target.position, transform.position);
-            float positionDistance = Vector3.Distance(transform.position, initialPosition);
-            if (canMove)
+            Move();
+        }
+    }
+    protected void Move()
+    {
+        float distance = Vector3.Distance(target.position, transform.position);
+        float positionDistance = Vector3.Distance(transform.position, initialPosition);
+        if (canMove)
+        {
+            enemy.isStopped = false;
+            if (returningToStartPosition)
             {
-                enemy.isStopped = false;
-                if(returningToStartPosition)
+                anim.SetTrigger("Walk");
+                anim.ResetTrigger("Idle");
+                destTime = timeBetweenDestinations;
+                currentRotationSpeed = rotationSpeed;
+                enemy.SetDestination(initialPosition);
+                currentSpeed = walkSpeed;
+            }
+            if (distance < attackRange && !returningToStartPosition)
+            {
+                if (enemy.speed != 0)
                 {
-                    enemy.SetDestination(initialPosition);
-                    enemy.speed = walkSpeed;
-                    anim.SetTrigger("Walk");
-                    anim.ResetTrigger("Idle");
-                    destTime = timeBetweenDestinations;
+                    anim.ResetTrigger("Chase");
+                    anim.SetTrigger("Idle");
+                    enemy.speed = 0;
                 }
-                if (distance < attackRange && !returningToStartPosition)
+                if (!isAttacking && !invulnerable)
                 {
-                    if (enemy.speed != 0)
+                    if (currentAttackCooldown >= attackCooldown)
                     {
-                        anim.ResetTrigger("Chase");
-                        anim.SetTrigger("Idle");
-                        enemy.speed = 0;
+                        anim.SetTrigger("Attack");
+                        isAttacking = true;
                     }
-                    if (!isAttacking && !invulnerable)
+                    else if (currentAttackCooldown >= attackCooldown / 2)
                     {
-                        if (currentAttackCooldown >= attackCooldown)
-                        {
-                            anim.SetTrigger("Attack");
-                            isAttacking = true;
-                        }
-                        else if (currentAttackCooldown >= attackCooldown / 2)
-                        {
-                            currentAttackCooldown += Time.deltaTime;
-                        }
-                        else
-                        {
-                            
-                            currentAttackCooldown += Time.deltaTime;
-                        }
+                        currentAttackCooldown += Time.deltaTime;
+                    }
+                    else
+                    {
+
+                        currentAttackCooldown += Time.deltaTime;
                     }
                 }
-                else if (distance < detectRange)
+            }
+            else if (distance < detectRange)
+            {
+                if (positionDistance <= chanseMaxRange && !returningToStartPosition)
                 {
-                    if (positionDistance <= chanseMaxRange && !returningToStartPosition)
+                    anim.SetTrigger("Chase");
+                    currentRotationSpeed = chaseRotationSpeed;
+                    enemy.SetDestination(target.position);
+                    currentSpeed = chaseSpeed;
+                }
+
+                else
+                {
+                    if (enemy.remainingDistance <= enemy.stoppingDistance)
                     {
-                        enemy.speed = chaseSpeed;
-                        anim.SetTrigger("Chase");
-                        enemy.SetDestination(target.position);
+                        returningToStartPosition = false;
+                        invulnerable = false;
                     }
                     else
                     {
                         returningToStartPosition = true;
                         invulnerable = true;
                     }
-                    currentAttackCooldown = 0;
                 }
-                else if (enemy.remainingDistance <= enemy.stoppingDistance)
-                {
-                    currentAttackCooldown = 0;
-                    if (destTime <= 0f)
-                    {
-                        enemy.SetDestination(RandomNavMeshLocation());
-                        enemy.speed = walkSpeed;
-                        anim.SetTrigger("Walk");
-                        anim.ResetTrigger("Idle");
-                        destTime = timeBetweenDestinations;
-                    }
-                    else
-                    {
-                        if (returningToStartPosition)
-                        {
-                            returningToStartPosition = false;
-                            invulnerable = false;
-                            hearts = maxHearts;
-
-                        }
-                        anim.SetTrigger("Idle");
-                        anim.ResetTrigger("Walk");
-                        destTime -= Time.deltaTime;
-                    }
-
-                }
+                currentAttackCooldown = 0;
             }
+            else if (enemy.remainingDistance <= enemy.stoppingDistance)
+            {
+                currentAttackCooldown = 0;
+                if (destTime <= 0f)
+                {
+                    anim.SetTrigger("Walk");
+                    anim.ResetTrigger("Idle");
+                    currentRotationSpeed = rotationSpeed;
+                    destTime = timeBetweenDestinations;
+
+                    enemy.SetDestination(RandomNavMeshLocation());
+                    currentSpeed = walkSpeed;
+                }
+                else
+                {
+                    if (returningToStartPosition)
+                    {
+                        returningToStartPosition = false;
+                        invulnerable = false;
+                        hearts = maxHearts;
+
+                    }
+                    anim.SetTrigger("Idle");
+                    anim.ResetTrigger("Walk");
+                    destTime -= Time.deltaTime;
+                }
+
+            }
+            SetMovementSpeed();
         }
     }
-    private void OnDrawGizmosSelected()
+    protected virtual void SetMovementSpeed()
     {
-        Gizmos.color = Color.blue;
-        Gizmos.DrawWireSphere(transform.position,detectRange);
+        Vector3 forwardDirection = transform.forward;
+        Vector3 directionToDestination = (enemy.destination - transform.position).normalized;
+        float dotProduct = Vector3.Dot(forwardDirection, directionToDestination);
+        if (dotProduct >= 0.9f)
+            enemy.speed = currentSpeed;
+        else enemy.speed = 0.2f;
 
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, attackRange);
+        if (directionToDestination != Vector3.zero)
+            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(directionToDestination), currentRotationSpeed * Time.deltaTime);
     }
+    
     public void TakeDamage(int damage)
     {
         if (!invulnerable)
@@ -210,9 +238,19 @@ public class Enemy : MonoBehaviour
         damagePlayerCollider.enabled = false;
         isDead = true;
         yield return new WaitForSeconds(2f);
-        gameManager.StawnCoins(coinsDropAmmount, new Vector3(transform.position.x, transform.position.y + coinsDropLocationOffsetY, transform.position.z));
+        gameManager.SpawnCoinsAmmount(coinsDropAmmount, new Vector3(transform.position.x, transform.position.y + coinsDropLocationOffsetY, transform.position.z));
         Destroy(gameObject);
     }
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireSphere(transform.position, detectRange);
+
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, attackRange);
+    }
+
     #region Anmator triggers
     public void StartAttack()
     {

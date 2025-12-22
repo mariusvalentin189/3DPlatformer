@@ -110,6 +110,7 @@ MonoBehaviour:
     type: 3}
   particlePosLeft: {fileID: 9041593186240520510}
   particlePosRight: {fileID: 7000249875936666041}
+  jumpCooldown: 0.15
   weaponCollider: {fileID: 8798971123408097487}
   minAnimTimeNextHit: 0.4
   maxAnimTimeNextHit: 0.7

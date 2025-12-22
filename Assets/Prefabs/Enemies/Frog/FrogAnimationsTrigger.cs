@@ -4,17 +4,25 @@ using UnityEngine;
 
 public class FrogAnimationsTrigger : MonoBehaviour
 {
-    [SerializeField] Enemy spiderEnemy;
+    [SerializeField] FrogEnemy frog;
     public void StartAttacking()
     {
-        spiderEnemy.StartAttack();
+        frog.StartAttack();
     }
     public void EndAttacking()
     {
-        spiderEnemy.EndAttack();
+        frog.EndAttack();
     }
     public void EndTakeDamage()
     {
-        spiderEnemy.EndTakeDamage();
+        frog.EndTakeDamage();
+    }
+    public void CanNotMove()
+    {
+        frog.CanNotMove();
+    }
+    public void CanMove()
+    {
+        frog.CanMove();
     }
 }

@@ -44,6 +44,7 @@ public class Player : MonoBehaviour
     [SerializeField] GameObject dustParticle;
     [SerializeField] GameObject particlePosLeft;
     [SerializeField] GameObject particlePosRight;
+    [SerializeField] float jumpCooldown = 0.1f;
     bool isGrounded;
     Vector3 initialPos;
 
@@ -64,9 +65,12 @@ public class Player : MonoBehaviour
     float speed = 0f, cpyjump, turnSmoothVelocity, cpyAirTime, groundAngle, dodgeTimer, afkTimer, attackCooldownTimer, dodgeAngle = 0;
     int jumpCounter, noOfClicks = 0, idleAnimID, jumpOnEnemyX, jumpOnEnemyZ, dirX, dirZ;
     bool jumped, doubleJumpUnlocked, dodgeUnlocked, canJumpInAir;
+    bool canJumpFromGround = true;
     Vector3 projected;
     AudioManager sounds;
     RaycastHit hit;
+
+    float jumpFromGropundTimer = 0f;
 
     private void Awake()
     {
@@ -327,58 +331,73 @@ public class Player : MonoBehaviour
             currentState = PlayerState.falling;
         }
         else anim.SetBool("Fall", false);
-        if ((isGrounded || canJumpInAir) && CanMove())
+
+        if (!canJumpFromGround && isGrounded)
         {
-            jumped = false;
-            anim.ResetTrigger("Jump");
-            moveDirection.y = 0f;
-            jumpCounter = 0;
-            if (cpyAirTime <= 0)
+            jumpFromGropundTimer += Time.deltaTime;
+            if (jumpFromGropundTimer > jumpCooldown)
             {
-                anim.SetBool("Land", true);
-                currentState = PlayerState.idle;
-            }
-            if (Input.GetKeyDown(PlayerInput.jumpKey))
-            {
-                currentState = PlayerState.jumping;
-                if (idleAnimID != 0)
-                {
-                    EndIdle();
-                }
-                canJumpInAir = false;
-                jumpCounter++;
-                moveDirection.y = jumpForce;
-                anim.SetTrigger("Jump");
-                sounds.PlayJumpSound();
-                jumped = true;
-            }
-            cpyAirTime = airTime;
-        }
-        else if (jumpCounter == 1 && !jumped && !isGrounded && doubleJumpUnlocked)
-        {
-            if (Input.GetKeyDown(PlayerInput.jumpKey))
-            {
-                currentState = PlayerState.jumping;
-                if (idleAnimID != 0)
-                {
-                    EndIdle();
-                }
-                moveDirection.y = jumpForce;
-                sounds.PlayJumpSound();
-                cpyAirTime = airTime;
-                jumpCounter++;
+                jumpFromGropundTimer = jumpCooldown;
+                canJumpFromGround = true;
             }
         }
         else
         {
-            cpyAirTime -= Time.deltaTime;
-            anim.SetBool("Land", false);
-        }
+            if ((isGrounded && canJumpFromGround || canJumpInAir) && CanMove())
+            {
+                jumped = false;
+                anim.ResetTrigger("Jump");
+                moveDirection.y = 0f;
+                jumpCounter = 0;
+                if (cpyAirTime <= 0)
+                {
+                    anim.SetBool("Land", true);
+                    currentState = PlayerState.idle;
+                }
+                if (Input.GetKeyDown(PlayerInput.jumpKey))
+                {
+                    jumpFromGropundTimer = 0f;
+                    canJumpFromGround = false;
+                    currentState = PlayerState.jumping;
+                    if (idleAnimID != 0)
+                    {
+                        EndIdle();
+                    }
+                    canJumpInAir = false;
+                    jumpCounter++;
+                    moveDirection.y = jumpForce;
+                    anim.SetTrigger("Jump");
+                    sounds.PlayJumpSound();
+                    jumped = true;
+                }
+                cpyAirTime = airTime;
+            }
+            else if (jumpCounter == 1 && !isGrounded && doubleJumpUnlocked)
+            {
+                if (Input.GetKeyDown(PlayerInput.jumpKey))
+                {
+                    currentState = PlayerState.jumping;
+                    if (idleAnimID != 0)
+                    {
+                        EndIdle();
+                    }
+                    moveDirection.y = jumpForce;
+                    sounds.PlayJumpSound();
+                    cpyAirTime = airTime;
+                    jumpCounter++;
+                }
+            }
+            else
+            {
+                cpyAirTime -= Time.deltaTime;
+                anim.SetBool("Land", false);
+            }
 
-        if (Input.GetKeyUp(PlayerInput.jumpKey) && jumped == true && moveDirection.y > 0 && !isGrounded)
-        {
-            moveDirection.y = jumpForce / 3f;
-            jumped = false;
+            if (Input.GetKeyUp(PlayerInput.jumpKey) && jumped == true && moveDirection.y > 0 && !isGrounded)
+            {
+                moveDirection.y = jumpForce / 3f;
+                jumped = false;
+            }
         }
     }
     void ApplyGravity()
