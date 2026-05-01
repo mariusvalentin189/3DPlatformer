@@ -1687,6 +1687,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &385494973
 MeshFilter:
@@ -4784,14 +4785,14 @@ Light:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1124575274}
   m_Enabled: 1
-  serializedVersion: 11
+  serializedVersion: 12
   m_Type: 1
   m_Color: {r: 0.7169812, g: 0.4836241, b: 0.4836241, a: 1}
   m_Intensity: 1
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
-  m_CookieSize: 10
+  m_CookieSize2D: {x: 10, y: 10}
   m_Shadows:
     m_Type: 2
     m_Resolution: -1
@@ -7084,6 +7085,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!114 &1649198853
 MonoBehaviour:
@@ -16974,6 +16976,21 @@ PrefabInstance:
       propertyPath: 'm_ActiveFontFeatures.Array.data[0]'
       value: 1801810542
       objectReference: {fileID: 0}
+    - target: {fileID: 999101822475786262, guid: d6e77bc6b0f780745b3af47ffc691140,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1492422517766890290, guid: d6e77bc6b0f780745b3af47ffc691140,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1492422518000722703, guid: d6e77bc6b0f780745b3af47ffc691140,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1492422518060607376, guid: d6e77bc6b0f780745b3af47ffc691140,
         type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -16983,6 +17000,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchoredPosition.x
       value: -0.60009766
+      objectReference: {fileID: 0}
+    - target: {fileID: 2598745719922037309, guid: d6e77bc6b0f780745b3af47ffc691140,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2701570657304646151, guid: d6e77bc6b0f780745b3af47ffc691140,
         type: 3}
@@ -17162,6 +17184,31 @@ PrefabInstance:
     - target: {fileID: 3977518655233964802, guid: d6e77bc6b0f780745b3af47ffc691140,
         type: 3}
       propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: SettingsButtons, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 3977518655267684930, guid: d6e77bc6b0f780745b3af47ffc691140,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3977518655293172409, guid: d6e77bc6b0f780745b3af47ffc691140,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5254035432962289894, guid: d6e77bc6b0f780745b3af47ffc691140,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 268160773}
+    - target: {fileID: 5254035432962289894, guid: d6e77bc6b0f780745b3af47ffc691140,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SetCurrent
+      objectReference: {fileID: 0}
+    - target: {fileID: 5254035432962289894, guid: d6e77bc6b0f780745b3af47ffc691140,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
       value: SettingsButtons, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 5677254093869283931, guid: d6e77bc6b0f780745b3af47ffc691140,

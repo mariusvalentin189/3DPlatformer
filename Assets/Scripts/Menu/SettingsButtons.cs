@@ -91,6 +91,9 @@ public class SettingsButtons : MonoBehaviour
         fullScreenToggle.isOn = SettingsManager.fullScreen;
         resolutionDropdown.value = savedIndex;
         resolutionDropdown.RefreshShownValue();
+
+        PauseMenu.instance.BackToPauseMenu();
+
     }
     private void OnGUI()
     {
@@ -143,6 +146,9 @@ public class SettingsButtons : MonoBehaviour
         PlayerPrefs.SetString("DodgeKey", keyButtons[6].CurrentKeyText.text);
         PlayerInput.SaveKeys(keyButtons[0].CurrentKey, keyButtons[1].CurrentKey, keyButtons[2].CurrentKey, keyButtons[3].CurrentKey, keyButtons[4].CurrentKey, keyButtons[5].CurrentKey, keyButtons[6].CurrentKey);
         EventSystem.current.SetSelectedGameObject(null);
+
+
+        PauseMenu.instance.BackToPauseMenu();
     }
     public void LoadInputs()
     {

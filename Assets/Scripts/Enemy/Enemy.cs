@@ -44,12 +44,14 @@ public class Enemy : MonoBehaviour
     int hearts;
     protected float currentSpeed;
     protected float currentRotationSpeed = 0;
+    EnemyDetector enemyDetector;
     protected void Start()
     {
         currentAttackCooldown = 0;
         defaultModelMaterials = model.materials;
         gameManager = GameManager.instance;
         target = GameObject.FindGameObjectWithTag("Player").transform;
+        enemyDetector = target.GetComponent<Player>().EnemyDetector;
         initialPosition = transform.position;
         destTime = timeBetweenDestinations;
         hearts = maxHearts;
@@ -269,7 +271,10 @@ public class Enemy : MonoBehaviour
     {
         model.materials = defaultModelMaterials;
         if (isDead)
+        {
+            enemyDetector.RemoveEnemy(this);
             StartCoroutine(Die());
+        }
         else
         {
             invulnerable = false;

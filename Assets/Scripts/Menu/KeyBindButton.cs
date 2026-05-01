@@ -28,6 +28,6 @@ public class KeyBindButton : MonoBehaviour
     }
     public void SetCurrentKeyText(string key)
     {
-        currentKeyText.text += key;
+        currentKeyText.text = key;
     }
 }

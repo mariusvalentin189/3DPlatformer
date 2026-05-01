@@ -57,13 +57,15 @@ public class Player : MonoBehaviour
     [SerializeField] float attackCooldown = 1f;
     [SerializeField] float[] comboMoveSpeeds;
     [SerializeField] HealthManager health;
+    [SerializeField] EnemyDetector enemyDetector;
 
+    public EnemyDetector EnemyDetector {  get { return enemyDetector; } }
     public bool IsInTutorial { get; set; }
     public Vector3 InitialPosition { get { return initialPos; } }
 
     Vector3 moveDirection;
     float speed = 0f, cpyjump, turnSmoothVelocity, cpyAirTime, groundAngle, dodgeTimer, afkTimer, attackCooldownTimer, dodgeAngle = 0;
-    int jumpCounter, noOfClicks = 0, idleAnimID, jumpOnEnemyX, jumpOnEnemyZ, dirX, dirZ;
+    int jumpCounter, noOfClicks = 0, idleAnimID, dirX, dirZ;
     bool jumped, doubleJumpUnlocked, dodgeUnlocked, canJumpInAir;
     bool canJumpFromGround = true;
     Vector3 projected;
@@ -144,13 +146,9 @@ public class Player : MonoBehaviour
         if (Physics.BoxCast(transform.position, new Vector3(player.radius-0.05f, player.radius, player.radius-0.05f), Vector3.down, out hit, Quaternion.identity, groundCheckDistance,whatIsGround))
         {
             projected = Vector3.Cross(hit.normal, -transform.right).normalized;
-            jumpOnEnemyX = 0;
-            jumpOnEnemyZ = 0;
             if (hit.collider.CompareTag("Enemy") && !isGrounded)
             {
                 jumped = false;
-                jumpOnEnemyX = UnityEngine.Random.Range(-2, 3);
-                jumpOnEnemyZ = UnityEngine.Random.Range(-2, 3);
                 moveDirection.y = jumpForce;
                 sounds.PlayJumpOnEnemySound();
                 hit.collider.gameObject.GetComponent<Enemy>().TakeDamage(1);
@@ -234,8 +232,15 @@ public class Player : MonoBehaviour
                     EndIdle();
                 }
                 if (currentState == PlayerState.attacking)
+                {  
                     EndAttacking();
-                transform.rotation = Quaternion.Euler(0f, dodgeAngle, 0f);
+                }
+                if (Input.GetKey(PlayerInput.leftKey) || Input.GetKey(PlayerInput.rightKey) ||
+                    Input.GetKey(PlayerInput.upKey) || Input.GetKey(PlayerInput.downKey))
+                {
+                    float targetAngle = Mathf.Atan2(moveDirection.x, moveDirection.z) * Mathf.Rad2Deg + cam.eulerAngles.y;
+                    transform.rotation = Quaternion.Euler(0f, targetAngle, 0f);
+                }
                 currentState = PlayerState.dodging;
                 dodgeTimer = dodgeCooldown;
                 health.Invulnerable = true;
@@ -259,6 +264,7 @@ public class Player : MonoBehaviour
                     }
                     if (speed > runSpeed)
                         speed = runSpeed;
+
                     float targetAngle = Mathf.Atan2(moveDirection.x, moveDirection.z) * Mathf.Rad2Deg + cam.eulerAngles.y;
                     float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
                     dodgeAngle = angle;
@@ -286,19 +292,8 @@ public class Player : MonoBehaviour
                     }
                 }
             }
-            else if (currentState == PlayerState.dodging)
-            {
-                player.Move(transform.forward * dodgeSpeed * Time.deltaTime);
-            }
             else if (currentState == PlayerState.attacking)
             {
-                if (Input.GetKey(PlayerInput.leftKey) || Input.GetKey(PlayerInput.rightKey) ||
-                    Input.GetKey(PlayerInput.upKey) || Input.GetKey(PlayerInput.downKey))
-                {
-                    float targetAngle = Mathf.Atan2(moveDirection.x, moveDirection.z) * Mathf.Rad2Deg + cam.eulerAngles.y;
-                    dodgeAngle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
-                    transform.rotation = Quaternion.Euler(0f, dodgeAngle, 0f);
-                }
                 player.Move(transform.forward * comboMoveSpeeds[noOfClicks - 1] * Time.deltaTime);
             }
         }
@@ -318,6 +313,14 @@ public class Player : MonoBehaviour
                 }
             }
         }
+
+        if (currentState == PlayerState.dodging)
+        {
+            player.Move(transform.forward * dodgeSpeed * Time.deltaTime);
+            if (weaponCollider.enabled)
+                DisableSwordColldier();
+        }
+
         if (dodgeTimer >= 0f)
             dodgeTimer -= Time.deltaTime;
         else dodgeTimer = 0f;
@@ -403,10 +406,18 @@ public class Player : MonoBehaviour
     void ApplyGravity()
     {
         if (!isGrounded)
+        {
             if (moveDirection.y > Physics.gravity.y * gravityMultiplyer)
+            {
                 moveDirection.y += Physics.gravity.y * gravityMultiplyer * Time.deltaTime;
-            else moveDirection.y = Physics.gravity.y * gravityMultiplyer;
-        player.Move(new Vector3(jumpOnEnemyX, moveDirection.y, jumpOnEnemyZ) * Time.deltaTime);
+            }
+            else
+            {
+                moveDirection.y = Physics.gravity.y * gravityMultiplyer;
+            }
+        }
+        player.Move(new Vector3(moveDirection.x, moveDirection.y, moveDirection.z) * Time.deltaTime);
+            
     }
     void LoadAdditionalStats()
     {
@@ -481,6 +492,11 @@ public class Player : MonoBehaviour
             currentState = PlayerState.attacking;
             noOfClicks++;
         }
+        //Auto look at enemy
+        if (enemyDetector.ClosestEnemy != null)
+        {
+            transform.LookAt(new Vector3(enemyDetector.ClosestEnemy.transform.position.x, transform.position.y, enemyDetector.ClosestEnemy.transform.position.z));
+        }
     }
 
 
@@ -510,6 +526,7 @@ public class Player : MonoBehaviour
         anim.SetBool("hit1", false);
         anim.SetBool("hit2", false);
         anim.SetBool("hit3", false);
+        DisableSwordColldier();
     }
     public void EndIdle()
     {

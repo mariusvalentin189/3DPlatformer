@@ -48,9 +48,6 @@ public class PauseMenu : MonoBehaviour
             {
                 if(isInControls || isInSettings)
                 {
-                    if(isInSettings)
-                        settingsButtons.Back();
-
                     BackToPauseMenu();
                 }
                 else
