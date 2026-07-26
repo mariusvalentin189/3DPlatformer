@@ -60,13 +60,12 @@ public class Player : MonoBehaviour
     [SerializeField] EnemyDetector enemyDetector;
 
     public EnemyDetector EnemyDetector {  get { return enemyDetector; } }
-    public bool IsInTutorial { get; set; }
     public Vector3 InitialPosition { get { return initialPos; } }
 
     Vector3 moveDirection;
     float speed = 0f, cpyjump, turnSmoothVelocity, cpyAirTime, groundAngle, dodgeTimer, afkTimer, attackCooldownTimer, dodgeAngle = 0;
     int jumpCounter, noOfClicks = 0, idleAnimID, dirX, dirZ;
-    bool jumped, doubleJumpUnlocked, dodgeUnlocked, canJumpInAir;
+    bool jumped, canJumpInAir;
     bool canJumpFromGround = true;
     Vector3 projected;
     AudioManager sounds;
@@ -87,9 +86,6 @@ public class Player : MonoBehaviour
         player = GetComponent <CharacterController>();
         initialPos = transform.position;
         cpyAirTime = airTime;
-        if (!IsInTutorial)
-            LoadAdditionalStats();
-        else UnlockStats();
     }
     void Update()
     {
@@ -225,7 +221,7 @@ public class Player : MonoBehaviour
                     currentState = PlayerState.idle;
                 else currentState = PlayerState.moving;
             }
-            if (Input.GetKeyDown(PlayerInput.dodgeKey) &&(CanMove() || currentState == PlayerState.attacking) && dodgeTimer <= 0f && dodgeUnlocked)
+            if (Input.GetKeyDown(PlayerInput.dodgeKey) &&(CanMove() || currentState == PlayerState.attacking) && dodgeTimer <= 0f)
             {
                 if (idleAnimID != 0)
                 {
@@ -375,7 +371,7 @@ public class Player : MonoBehaviour
                 }
                 cpyAirTime = airTime;
             }
-            else if (jumpCounter == 1 && !isGrounded && doubleJumpUnlocked)
+            else if (jumpCounter == 1 && !isGrounded)
             {
                 if (Input.GetKeyDown(PlayerInput.jumpKey))
                 {
@@ -416,24 +412,8 @@ public class Player : MonoBehaviour
                 moveDirection.y = Physics.gravity.y * gravityMultiplyer;
             }
         }
-        player.Move(new Vector3(moveDirection.x, moveDirection.y, moveDirection.z) * Time.deltaTime);
+        player.Move(new Vector3(0f, moveDirection.y, 0f) * Time.deltaTime);
             
-    }
-    void LoadAdditionalStats()
-    {
-        int v = 0;
-        if (PlayerPrefs.HasKey("JumpUnlocked"))
-            v = PlayerPrefs.GetInt("JumpUnlocked");
-        if (v == 0)
-            doubleJumpUnlocked = true; //Test
-        else doubleJumpUnlocked = true;
-        v = 0;
-        if (PlayerPrefs.HasKey("DodgeUnlocked"))
-            v = PlayerPrefs.GetInt("DodgeUnlocked");
-        if (v == 0)
-            dodgeUnlocked = true; //Test
-        else dodgeUnlocked = true;
-
     }
 
     void Attack()
@@ -543,11 +523,6 @@ public class Player : MonoBehaviour
     }
     #endregion
 
-    public void UnlockStats()
-    {
-        doubleJumpUnlocked = true;
-        dodgeUnlocked = true;
-    }
     public void SpawnDustParticleLeft()
     {
         if(isGrounded)
