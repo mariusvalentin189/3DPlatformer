@@ -55,7 +55,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1.9999999, y: 1.9999999, z: 0.31931892}
+  m_Size: {x: 1.9999999, y: 1.9999999, z: 2}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &3904331536253163567
 MonoBehaviour:
@@ -69,9 +69,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5638d4fa34212ff47add3ae3d08ba90e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rotateSpeed: 40
-  collectDistance: 1
-  moveSpeed: 30
 --- !u!114 &4291280136036138640
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -125,14 +122,14 @@ Light:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7537469960308353969}
   m_Enabled: 1
-  serializedVersion: 11
+  serializedVersion: 12
   m_Type: 2
   m_Color: {r: 0.95649, g: 1, b: 0.495283, a: 1}
   m_Intensity: 1.5
   m_Range: 0.5
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
-  m_CookieSize: 10
+  m_CookieSize2D: {x: 10, y: 10}
   m_Shadows:
     m_Type: 0
     m_Resolution: -1
